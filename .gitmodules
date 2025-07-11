@@ -1,0 +1,6 @@
+[submodule "thirdparty/rpg_svo"]
+	path = thirdparty/rpg_svo
+	url = https://github.com/AlexandruRO45/rpg_svo.git
+[submodule "thirdparty/pybind11"]
+	path = thirdparty/pybind11
+	url = https://github.com/pybind/pybind11.git
