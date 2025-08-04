@@ -27,14 +27,6 @@ class CMakeBuild(build_ext):
         """
         extdir = Path(self.get_ext_fullpath(ext.name)).parent.resolve()
 
-        # Extract vocabulary file
-        # vocab_src = Path(ext.sourcedir) / "third_party" / "ORB_SLAM3_engine" / "Vocabulary" / "ORBvoc.txt.tar.gz"
-        # vocab_dst_dir = Path(ext.sourcedir) / "tests" / "configs" # Instead of same parent dir vocab_src.parent we move it to test/configs
-        # if vocab_src.exists():
-        #     print(f"Extracting {vocab_src} to {vocab_dst_dir}")
-        #     with tarfile.open(vocab_src, "r:gz") as tar:
-        #         tar.extractall(path=vocab_dst_dir)
-
         # Allow user to override build type with an environment variable
         build_type = os.environ.get("CMAKE_BUILD_TYPE", "Release")  # or Debug if needed
         
@@ -62,9 +54,6 @@ class CMakeBuild(build_ext):
         subprocess.check_call(["cmake", str(ext.sourcedir)] + cmake_args, cwd=build_temp)
 
         # Allow user to override parallel jobs 
-        # TODO: Known bug if there are more than 8 jobs, CMake will fail to build
-        # build_jobs = str(8) # Default to 8 jobs for now, can be overridden by user
-        # Uncomment the following lines to allow user to set this via environment variable
         build_jobs = os.environ.get("CMAKE_BUILD_PARALLEL_LEVEL")
         if not build_jobs:
             build_jobs = str(os.cpu_count() or 8) # Default to number of CPUs
